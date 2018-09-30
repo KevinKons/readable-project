@@ -4,6 +4,7 @@ import {loadAllPostsAPI} from "../actions/post"
 import {connect} from 'react-redux'
 import PostCard from './PostCard'
 import '../CSS/PostList.css'
+import { Link } from 'react-router-dom'
 
 class PostList extends Component {
 
@@ -26,10 +27,12 @@ class PostList extends Component {
                 {
                     posts !== undefined &&
                     posts.map((post) => (
-                        <PostCard
-                            post={post}
-                            key={post.id}
-                        />
+                        <Link to='/post'>
+                            <PostCard
+                                post={post}
+                                key={post.id}
+                            />
+                        </Link>
                     ))
                 }
             </div>
@@ -37,6 +40,14 @@ class PostList extends Component {
         )
     }
 
+    directToPostPage = (post) => {
+        console.log('tao');
+        return (
+            <div>
+                <Link to='/post'/>
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = (state, ownProps) => ({

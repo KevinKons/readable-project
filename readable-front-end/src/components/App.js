@@ -6,6 +6,8 @@ import  PostList  from './PostList'
 import { loadCategoriesAPI } from "../actions/categories";
 import CreateNewPost from './CreateNewPost'
 import Modal from 'react-modal'
+import { Route } from 'react-router-dom'
+
 
 class App extends Component {
 
@@ -20,25 +22,29 @@ class App extends Component {
     }
 
     render() {
-        const {selectedCategory, newPostModalOpen} = this.state
+        const {selectedCategory, newPostModalOpen} = this.state;
 
         return (
             <div className="App">
-                <SingleOptionSelector/>
-                <SingleOptionSelector/>
-                <button onClick={this.openNewPostModal}>New post</button>
+                <Route exact path='/' render={() => (
+                    <div>
+                        <SingleOptionSelector/>
+                        <SingleOptionSelector/>
+                        <button onClick={this.openNewPostModal}>New post</button>
 
-                <PostList selectedCategory={selectedCategory}/>
+                        <PostList selectedCategory={selectedCategory}/>
 
-                <Modal
-                    isOpen={newPostModalOpen}
-                    onRequestClose={this.closeNewPostModal}
-                    ariaHideApp={false}
-                    >
-                    <CreateNewPost
-                        categories={this.props.categories.categories}
-                    />
-                </Modal>
+                        <Modal
+                            isOpen={newPostModalOpen}
+                            onRequestClose={this.closeNewPostModal}
+                            ariaHideApp={false}
+                        >
+                        <CreateNewPost
+                            categories={this.props.categories.categories}
+                        />
+                        </Modal>
+                    </div>
+                )}/>
             </div>
         );
     }
@@ -47,7 +53,7 @@ class App extends Component {
         this.setState(() => ({
             newPostModalOpen: true
         }))
-    }
+    };
 
     closeNewPostModal = () => {
         this.setState(() => ({
@@ -58,12 +64,12 @@ class App extends Component {
 
 const mapStateToProps = (categories) => ({
     categories: categories.categories
-})
+});
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getCategories: () => dispatch(loadCategoriesAPI())
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
