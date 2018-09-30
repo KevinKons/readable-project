@@ -1,0 +1,8 @@
+.post_list_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid black;
+    padding: 10px;
+    background-color: yellow;
+}
