@@ -2,7 +2,7 @@ const api = "http://localhost:3001";
 
 let token = localStorage.token;
 if(!token) {
-    token = localStorage.token = Math.random().toString(46).substr(-8)
+    token = localStorage.token = Math.random().toString(36).substr(-8)
 }
 
 const headers = {

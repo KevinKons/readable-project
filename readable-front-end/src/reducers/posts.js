@@ -20,14 +20,16 @@ export const posts = (state ={}, action) => {
             };
         case VOTE_POST:
             return {
-                ...posts,
+                ...state,
                 posts: state.posts.map((post) => {
-                    post.id === id && (
-                        post.voteScore = voteScore
-                    );
-                    return post
-                })
-            };
+                if(post.id === id) {
+                    return {
+                        ...post,
+                        voteScore: voteScore
+                    }
+                }
+                return post
+            })};
         default:
             return {
                 state

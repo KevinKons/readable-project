@@ -3,10 +3,11 @@ import '../App.css';
 import { connect } from 'react-redux'
 import SingleOptionSelector from './SingleOptionSelector'
 import  PostList  from './PostList'
+import PostPage from './PostPage'
 import { loadCategoriesAPI } from "../actions/categories";
 import CreateNewPost from './CreateNewPost'
 import Modal from 'react-modal'
-import { Route } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 
 class App extends Component {
@@ -26,25 +27,32 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Route exact path='/' render={() => (
-                    <div>
-                        <SingleOptionSelector/>
-                        <SingleOptionSelector/>
-                        <button onClick={this.openNewPostModal}>New post</button>
+                <Switch>
+                    <Route exact path='/' render={() => (
+                        <div>
+                            <SingleOptionSelector/>
+                            <SingleOptionSelector/>
+                            <button onClick={this.openNewPostModal}>New post</button>
 
-                        <PostList selectedCategory={selectedCategory}/>
+                            <PostList selectedCategory={selectedCategory}/>
 
-                        <Modal
-                            isOpen={newPostModalOpen}
-                            onRequestClose={this.closeNewPostModal}
-                            ariaHideApp={false}
-                        >
-                        <CreateNewPost
-                            categories={this.props.categories.categories}
-                        />
-                        </Modal>
-                    </div>
+                            <Modal
+                                isOpen={newPostModalOpen}
+                                onRequestClose={this.closeNewPostModal}
+                                ariaHideApp={false}
+                            >
+                            <CreateNewPost
+                                categories={this.props.categories.categories}
+                            />
+                            </Modal>
+                        </div>
+                    )}/>
+                </Switch>
+
+                <Route path='/post' render={() => (
+                    <PostPage></PostPage>
                 )}/>
+
             </div>
         );
     }
@@ -72,4 +80,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
